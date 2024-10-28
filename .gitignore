@@ -1,0 +1,9 @@
+# Ignore npm files/folders
+node_modules
+
+# Ignore Mac files
+.DS_Store
+
+# Ignore Visual Studio Code project and settings files
+.vscode/
+.idea/

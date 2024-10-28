@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+    <template id="menu-component">
+        <popover-component popover>
+            <slot></slot>
+        </popover-component>
+        </div>
+    </template>
+
+    <template id="popover-component">
+        <slot></slot>
+        <div>Popover's content</div>
+        </div>
+    </template>
+    <template id="menu-item-component">
+        <div>
+            <slot></slot>
+        </div>
+        </div>
+    </template>
+</head>
+
+<body>
+    <button id="btn">Toggle the menu</button>
+
+    <menu-component>
+        <menu-item-component>Item 1</menu-item-component>
+        <menu-item-component>Item 2</menu-item-component>
+        <menu-item-component>Item 3</menu-item-component>
+        <menu-item-component>Item 4</menu-item-component>
+        <menu-item-component>Item 5</menu-item-component>
+    </menu-component>
+
+
+    <button popovertarget="mypopover" id="btn2">Toggle the popover</button>
+    <div class="menu-component">
+        <div id="mypopover" popover class="popover-component">
+            <div class="menu-item-component">Item 1</div>
+            <div class="menu-item-component">Item 2</div>
+            <div class="menu-item-component">Item 3</div>
+            <div class="menu-item-component">Item 4</div>
+            <div class="menu-item-component">Item 5</div>
+            Popover's content
+        </div>
+
+        <script>
+            customElements.define(
+                "menu-component",
+                class extends HTMLElement {
+                    constructor() {
+                        super();
+                        let template = document.getElementById("menu-component");
+                        let templateContent = template.content;
+
+                        const shadowRoot = this.attachShadow({ mode: "open" });
+                        shadowRoot.appendChild(templateContent.cloneNode(true));
+                    }
+                },
+            );
+
+            customElements.define(
+                "popover-component",
+                class extends HTMLElement {
+                    constructor() {
+                        super();
+                        let template = document.getElementById("popover-component");
+                        let templateContent = template.content;
+
+                        const shadowRoot = this.attachShadow({ mode: "open" });
+                        shadowRoot.appendChild(templateContent.cloneNode(true));
+                    }
+                },
+            );
+
+            customElements.define(
+                "menu-item-component",
+                class extends HTMLElement {
+                    constructor() {
+                        super();
+                        let template = document.getElementById("menu-item-component");
+                        let templateContent = template.content;
+
+                        const shadowRoot = this.attachShadow({ mode: "open" });
+                        shadowRoot.appendChild(templateContent.cloneNode(true));
+                    }
+                },
+            );
+
+            btn.addEventListener("click", () => {
+                const menuComponent = document.querySelector("menu-component")
+                menuComponent.shadowRoot.querySelector("popover-component").showPopover()
+            })
+        </script>
+
+</body>
+
+</html>
